@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Vector3 = UnityEngine.Vector3;
 
 public class RocketController : MonoBehaviour
@@ -16,7 +17,7 @@ public class RocketController : MonoBehaviour
 
     private float _speed;
 
-    public GameObject kim;
+    public GameObject gm;
 
     private Vector3 _rotation;
 
@@ -32,6 +33,10 @@ public class RocketController : MonoBehaviour
 
     private bool _isGoingToExplode;
 
+    public float rotationSpeed = 0.1f;
+
+    public ParticleSystem particleSystem;
+    
     private void Start()
     {
         _speed = minSpeed;
@@ -54,14 +59,19 @@ public class RocketController : MonoBehaviour
         if(transform.localScale.x > minScale.x && _isGoingToExplode)
             transform.localScale = Vector3.Lerp(transform.localScale, minScale, Time.deltaTime * scaleMultiplier);
 
-        if (_speed > maxSpeed && _isGoingToExplode)
+        if (_speed > minSpeed && _isGoingToExplode)
             _speed = Mathf.Lerp(_speed, minSpeed, Time.deltaTime * speedMultiplier);
+        
+        if(Math.Abs(_speed - minSpeed) < 0.1f && _isGoingToExplode)
+            Explode();
 
         var t = transform;
         t.localPosition += -t.forward * Time.deltaTime * _speed;
 
         float xRot = t.rotation.x;
-        //transform.Rotate(Vector3.up * kim. * rotationSpeed);
+        transform.Rotate(Vector3.up * gm.GetComponent<InputController>().sideways * rotationSpeed);
+
+        _isGoingToExplode = gm.GetComponent<InputController>().explode;
 
         if (Time.time - _startTime > timestamp)
         {
@@ -72,9 +82,8 @@ public class RocketController : MonoBehaviour
 
     void Explode()
     {
-        ParticleSystem exp = GetComponent<ParticleSystem>();
-        exp.Play();
-        Destroy(gameObject, exp.main.duration);
+        particleSystem.Play();
+        Destroy(gameObject, particleSystem.main.duration);
     }
 
     void ToggleTrail()

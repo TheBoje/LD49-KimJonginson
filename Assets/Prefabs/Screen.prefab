@@ -5274,12 +5274,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 0.5
   maxScale: {x: 0, y: 0, z: 0}
-  rotationSpeed: 0
-  kim: {fileID: 0}
+  minSpeed: 0
+  minScale: {x: 0, y: 0, z: 0}
+  gm: {fileID: 0}
   timestamp: 0.25
   fuel: 50
   scaleMultiplier: 1.1
   speedMultiplier: 1.1
+  rotationSpeed: 0
+  particleSystem: {fileID: 4849836094428910407}
 --- !u!65 &5302436822542238830
 BoxCollider:
   m_ObjectHideFlags: 0

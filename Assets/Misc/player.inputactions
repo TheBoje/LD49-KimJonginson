@@ -12,6 +12,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Explode",
+                    "type": "Button",
+                    "id": "c2e06f63-4063-4510-a0ed-332984e2c868",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -47,6 +55,17 @@
                     "action": "Controls",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "67871384-d305-4782-9962-85234573c108",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Explode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

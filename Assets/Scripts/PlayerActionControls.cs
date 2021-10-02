@@ -25,6 +25,14 @@ public class @PlayerActionControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Explode"",
+                    ""type"": ""Button"",
+                    ""id"": ""c2e06f63-4063-4510-a0ed-332984e2c868"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -60,6 +68,17 @@ public class @PlayerActionControls : IInputActionCollection, IDisposable
                     ""action"": ""Controls"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""67871384-d305-4782-9962-85234573c108"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Explode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -130,6 +149,7 @@ public class @PlayerActionControls : IInputActionCollection, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Controls = m_Player.FindAction("Controls", throwIfNotFound: true);
+        m_Player_Explode = m_Player.FindAction("Explode", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -180,11 +200,13 @@ public class @PlayerActionControls : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Controls;
+    private readonly InputAction m_Player_Explode;
     public struct PlayerActions
     {
         private @PlayerActionControls m_Wrapper;
         public PlayerActions(@PlayerActionControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Controls => m_Wrapper.m_Player_Controls;
+        public InputAction @Explode => m_Wrapper.m_Player_Explode;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -197,6 +219,9 @@ public class @PlayerActionControls : IInputActionCollection, IDisposable
                 @Controls.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControls;
                 @Controls.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControls;
                 @Controls.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControls;
+                @Explode.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExplode;
+                @Explode.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExplode;
+                @Explode.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExplode;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -204,6 +229,9 @@ public class @PlayerActionControls : IInputActionCollection, IDisposable
                 @Controls.started += instance.OnControls;
                 @Controls.performed += instance.OnControls;
                 @Controls.canceled += instance.OnControls;
+                @Explode.started += instance.OnExplode;
+                @Explode.performed += instance.OnExplode;
+                @Explode.canceled += instance.OnExplode;
             }
         }
     }
@@ -256,5 +284,6 @@ public class @PlayerActionControls : IInputActionCollection, IDisposable
     public interface IPlayerActions
     {
         void OnControls(InputAction.CallbackContext context);
+        void OnExplode(InputAction.CallbackContext context);
     }
 }

@@ -95,4 +95,10 @@ public class InputController : MonoBehaviour
     {
         _playerActionControls.Disable();
     }
+
+    public float PerlinScale
+    {
+        get => _perlinScale;
+        set => _perlinScale = value;
+    }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -36,16 +37,14 @@ public class RocketController : MonoBehaviour
     public float consumerMultiplier = 0.1f;
 
     private bool _isGoingToExplode;
+    private bool _isExploded;
 
     public float rotationSpeed = 0.1f;
 
     public ParticleSystem particleSystem;
 
     public TextMesh fuelLevel;
-
-    public Transform target;
-    private float _targetDistance;
-
+    
     private int ComputeFuelLeft()
     {
         return (int) Mathf.Floor((_fuel * NB_BARS_FUEL) / maxFuel);
@@ -86,7 +85,7 @@ public class RocketController : MonoBehaviour
         _startTime = Time.time;
         _isGoingToExplode = false;
         _fuel = maxFuel;
-        _targetDistance = Vector3.Distance(transform.position, target.position);
+        _isExploded = false;
     }
 
     // Update is called once per frame
@@ -104,8 +103,11 @@ public class RocketController : MonoBehaviour
         if (_speed > minSpeed && _isGoingToExplode)
             _speed = Mathf.Lerp(_speed, minSpeed, Time.deltaTime * speedMultiplier);
         
-        if(Math.Abs(_speed - minSpeed) < 0.1f && _isGoingToExplode)
+        if(Math.Abs(_speed - minSpeed) < 0.1f && _isGoingToExplode && !_isExploded)
+        {
+            _speed = 0;
             Explode();
+        }
 
         var t = transform;
         t.localPosition += -t.forward * Time.deltaTime * _speed;
@@ -121,9 +123,6 @@ public class RocketController : MonoBehaviour
             _startTime = Time.time;
             ToggleTrail();
         }
-
-        _targetDistance = Vector3.Distance(transform.position, target.position);
-        
         ConsumeFuel();
         PrintFuel();
     }
@@ -131,7 +130,8 @@ public class RocketController : MonoBehaviour
     void Explode()
     {
         particleSystem.Play();
-        Destroy(gameObject, particleSystem.main.duration);
+        Destroy(particleSystem, particleSystem.main.duration);
+        _isExploded = true;
     }
 
     void ToggleTrail()
@@ -139,5 +139,5 @@ public class RocketController : MonoBehaviour
         _trail.emitting = !_trail.emitting;
     }
 
-    public float TargetDistance => _targetDistance;
+    public bool IsExploded => _isExploded;
 }

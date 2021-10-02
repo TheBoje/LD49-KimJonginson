@@ -1,13 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine; 
+using UnityEngine.InputSystem;
+using UnityEngine.PlayerLoop;
 
 public class PlayerController : MonoBehaviour
 {
     // Reference to stand
     public GameObject stand;
+
+    private PlayerActionControls _playerActionControls;
     
     private GameObject _leftShoulderPivot;
     private GameObject _rightShoulderPivot;
@@ -21,20 +24,34 @@ public class PlayerController : MonoBehaviour
     private GameObject _rightController;
     private GameObject _rightControllerPivot;
     
-    
+    // Input values
+    private float _inputSideways;
+    public float sideways;
+    public float topways;
 
-    private void getInput()
-    {
-        
-    }
+    [SerializeField] private float lerpCoef = 0.4f;
     
-    // Set left hand to middle in between leftShoulderPivot & leftControllerPivot
-    private void SnapLeftHand()
+    public void Sidewayspressed(InputAction.CallbackContext context)
     {
-        Vector3 leftDirection = _leftControllerPivot.transform.position - _leftShoulderPivot.transform.position;
-        Vector3 leftMiddle = leftDirection / 2f + _leftShoulderPivot.transform.position;
-        _leftHand.transform.position = leftMiddle;
-        _leftHand.transform.rotation = Quaternion.FromToRotation(Vector3.up, leftDirection);
+        _inputSideways = _playerActionControls.Player.Controls.ReadValue<float>();
+    }
+
+    private void LocalUpdateInput()
+    {
+        float temp = Mathf.Lerp(sideways, _inputSideways, lerpCoef * Time.deltaTime * 10);
+        if (temp >= 1)
+        {
+            sideways = 1f;
+        } else if (temp <= -1)
+        {
+            sideways = -1f;
+        } else if (temp < 0.01f && temp > -0.01f)
+        {
+            sideways = 0f;
+        } else
+        {
+            sideways = temp;
+        }
     }
 
     private void SnapBetween(GameObject main, GameObject from, GameObject to)
@@ -48,6 +65,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       
         // Set hand position to stand left and right controllers' position
         // Find controllers and controllers` pivots in scene
         _leftController = stand.transform.Find("LeftController").gameObject;
@@ -64,10 +82,30 @@ public class PlayerController : MonoBehaviour
         _rightHandPivot = _rightHand.transform.Find("RightHandPivot").gameObject;
     }
 
+    private void Awake()
+    {
+        _playerActionControls = new PlayerActionControls();
+    }
+
+    private void OnEnable()
+    {
+        _playerActionControls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _playerActionControls.Disable();
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
         SnapBetween(_leftHand, _leftShoulderPivot, _leftControllerPivot);
         SnapBetween(_rightHand, _rightShoulderPivot, _rightControllerPivot);
+    }
+
+    private void Update()
+    {
+        LocalUpdateInput();
     }
 }

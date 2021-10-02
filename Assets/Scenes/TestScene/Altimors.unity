@@ -290,6 +290,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 180210811}
+    - target: {fileID: 7585508871945465175, guid: 0998be30a98eddd4291f3790cf7f29f8, type: 3}
+      propertyPath: _xScale
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7585508871945465175, guid: 0998be30a98eddd4291f3790cf7f29f8, type: 3}
+      propertyPath: _perlinScale
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 7585508871945465176, guid: 0998be30a98eddd4291f3790cf7f29f8, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -703,7 +711,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6794125598472161934, guid: 272f6a3ea053df143b8d8cdbdf1cdbb3, type: 3}
       propertyPath: rotationSpeed
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6794125598472161934, guid: 272f6a3ea053df143b8d8cdbdf1cdbb3, type: 3}
       propertyPath: scaleMultiplier

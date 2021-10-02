@@ -821,6 +821,10 @@ PrefabInstance:
       propertyPath: speedMultiplier
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6794125598472161934, guid: 272f6a3ea053df143b8d8cdbdf1cdbb3, type: 3}
+      propertyPath: consumerMultiplier
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7219575170409381628, guid: 272f6a3ea053df143b8d8cdbdf1cdbb3, type: 3}
       propertyPath: m_FontStyle
       value: 1

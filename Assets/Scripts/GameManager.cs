@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject rocket;
-    public GameObject target;
+    public GameObject usa;
+    public GameObject korea;
     private InputController _inputController;
 
     [SerializeField] private float _targetDistance;
@@ -13,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     float ComputeTargetDistance()
     {
-        return Vector3.Distance(rocket.transform.position, target.transform.position);
+        return Vector3.Distance(rocket.transform.position, usa.transform.position);
     }
 
     /**
@@ -28,8 +30,10 @@ public class GameManager : MonoBehaviour
     {
         if (rocket.GetComponent<RocketController>().IsExploded)
         {
-            if (target.GetComponent<USAController>().IsInUsa)
+            if (usa.GetComponent<TargetController>().IsInTarget)
                 Debug.Log("WIN !!!");
+            else if(korea.GetComponent<TargetController>().IsInTarget)
+                Debug.Log("Boom boom dans la Corée");
             else
                 Debug.Log("LOSE !!!");
         }

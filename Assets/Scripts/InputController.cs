@@ -30,9 +30,7 @@ public class InputController : MonoBehaviour
 
     private float getPerlinVariation()
     {
-        float temp = ((2 *  _perlinScale) * Mathf.PerlinNoise(Time.time * _xScale, 0.0f)) - _perlinScale;
-        Debug.Log("Perlin variation is :" + temp);
-        return temp;
+        return ((2 *  _perlinScale) * Mathf.PerlinNoise(Time.time * _xScale, 0.0f)) - _perlinScale;
     }
     
     private void LocalUpdateInput()

@@ -12,13 +12,38 @@ public class RocketController : MonoBehaviour
 
     private Vector3 _rotation;
 
+    private TrailRenderer _trail;
+    public float timestamp = 0.5f;
+
+    private float _startTime;
+
+    public float fuel = 50f;
+
+    private void Start()
+    {
+        _trail = gameObject.GetComponentInChildren<TrailRenderer>();
+        _trail.time = fuel;
+        _startTime = Time.time;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.localPosition += -transform.forward * Time.deltaTime * speed;
+        var t = transform;
+        t.localPosition += -t.forward * Time.deltaTime * speed;
 
-        float xRot = transform.rotation.x;
-        Debug.Log(kim.GetComponent<PlayerController>().sideways);
+        float xRot = t.rotation.x;
         transform.Rotate(Vector3.up * kim.GetComponent<PlayerController>().sideways * rotationSpeed);
+
+        if (Time.time - _startTime > timestamp)
+        {
+            _startTime = Time.time;
+            ToggleTrail();
+        }   
+    }
+
+    void ToggleTrail()
+    {
+        _trail.emitting = !_trail.emitting;
     }
 }

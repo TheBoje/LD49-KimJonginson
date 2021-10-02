@@ -50,6 +50,7 @@ MonoBehaviour:
   _xScale: 4
   lerpCoef: 0.4
   sideways: 0
+  explode: 0
 --- !u!114 &589755355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +92,22 @@ MonoBehaviour:
         m_CallState: 1
     m_ActionId: 0919e4cc-95e5-4670-a87a-3f998a719786
     m_ActionName: Player/Controls[/Keyboard/q,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7585508871945465174}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c2e06f63-4063-4510-a0ed-332984e2c868
+    m_ActionName: Player/Explode[/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

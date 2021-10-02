@@ -22,17 +22,21 @@ public class InputController : MonoBehaviour
     [SerializeField] private float lerpCoef = 0.4f;
 
     public float sideways;
+    public bool explode = false;
     
     public void handleSidewaysInput(InputAction.CallbackContext context)
     {
         _inputSideways = _playerActionControls.Player.Controls.ReadValue<float>();
     }
 
+    public void handleExplodeInput(InputAction.CallbackContext context)
+    {
+        explode = true;
+    }
+
     private float getPerlinVariation()
     {
-        float temp = ((2 *  _perlinScale) * Mathf.PerlinNoise(Time.time * _xScale, 0.0f)) - _perlinScale;
-        Debug.Log("Perlin variation is :" + temp);
-        return temp;
+        return ((2 *  _perlinScale) * Mathf.PerlinNoise(Time.time * _xScale, 0.0f)) - _perlinScale;
     }
     
     private void LocalUpdateInput()

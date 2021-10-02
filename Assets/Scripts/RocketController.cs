@@ -9,6 +9,8 @@ using Vector3 = UnityEngine.Vector3;
 
 public class RocketController : MonoBehaviour
 {
+    private const int NB_BARS_FUEL = 20;
+    
     public float maxSpeed = 1f;
     public Vector3 maxScale;
     
@@ -26,25 +28,65 @@ public class RocketController : MonoBehaviour
 
     private float _startTime;
 
-    public float fuel = 50f;
+    public float maxFuel = 50f;
+    private float _fuel;
 
     public float scaleMultiplier = 0.1f;
     public float speedMultiplier = 0.1f;
+    public float consumerMultiplier = 0.1f;
 
     private bool _isGoingToExplode;
 
     public float rotationSpeed = 0.1f;
 
     public ParticleSystem particleSystem;
+
+    public TextMesh fuelLevel;
+
+    public Transform target;
+    private float _targetDistance;
+
+    private int ComputeFuelLeft()
+    {
+        return (int) Mathf.Floor((_fuel * NB_BARS_FUEL) / maxFuel);
+    }
+
+    private void PrintFuel()
+    {
+        String str = "";
+        int nbBars = ComputeFuelLeft();
+
+        for (int i = 0; i < nbBars; i++)
+        {
+            str += '|';
+        }
+
+        for (int i = nbBars; i < NB_BARS_FUEL; i++)
+        {
+            str += '.';
+        }
+
+        fuelLevel.text = "Fuel " + str;
+    }
+
+    private void ConsumeFuel()
+    {
+        _fuel = Mathf.Lerp(_fuel, 0, Time.deltaTime * consumerMultiplier);
+
+        if (_fuel <= 2)
+            _isGoingToExplode = true;
+    }
     
     private void Start()
     {
         _speed = minSpeed;
         transform.localScale = minScale;
         _trail = gameObject.GetComponentInChildren<TrailRenderer>();
-        _trail.time = fuel;
+        _trail.time = maxFuel;
         _startTime = Time.time;
         _isGoingToExplode = false;
+        _fuel = maxFuel;
+        _targetDistance = Vector3.Distance(transform.position, target.position);
     }
 
     // Update is called once per frame
@@ -71,15 +113,21 @@ public class RocketController : MonoBehaviour
         float xRot = t.rotation.x;
         transform.Rotate(Vector3.up * gm.GetComponent<InputController>().sideways * rotationSpeed);
 
-        _isGoingToExplode = gm.GetComponent<InputController>().explode;
+        if (gm.GetComponent<InputController>().explode && !_isGoingToExplode)
+            _isGoingToExplode = true;
 
         if (Time.time - _startTime > timestamp)
         {
             _startTime = Time.time;
             ToggleTrail();
         }
-    }
 
+        _targetDistance = Vector3.Distance(transform.position, target.position);
+        
+        ConsumeFuel();
+        PrintFuel();
+    }
+    
     void Explode()
     {
         particleSystem.Play();
@@ -90,4 +138,6 @@ public class RocketController : MonoBehaviour
     {
         _trail.emitting = !_trail.emitting;
     }
+
+    public float TargetDistance => _targetDistance;
 }

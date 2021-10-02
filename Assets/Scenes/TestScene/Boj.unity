@@ -555,6 +555,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833818536}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1950454566 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7871333242196724945, guid: f77c058cc01d98246b50d35851f05f0e, type: 3}
+  m_PrefabInstance: {fileID: 1927172078742519178}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5099975fa6aba9a40aed1e604a7084ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2011493865
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,6 +784,30 @@ PrefabInstance:
     - target: {fileID: 7871333242196724949, guid: f77c058cc01d98246b50d35851f05f0e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9003886523717073590, guid: f77c058cc01d98246b50d35851f05f0e, type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9003886523717073590, guid: f77c058cc01d98246b50d35851f05f0e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9003886523717073590, guid: f77c058cc01d98246b50d35851f05f0e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1950454566}
+    - target: {fileID: 9003886523717073590, guid: f77c058cc01d98246b50d35851f05f0e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9003886523717073590, guid: f77c058cc01d98246b50d35851f05f0e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Sidewayspressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 9003886523717073590, guid: f77c058cc01d98246b50d35851f05f0e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerController, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f77c058cc01d98246b50d35851f05f0e, type: 3}

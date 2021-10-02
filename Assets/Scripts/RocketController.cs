@@ -33,7 +33,7 @@ public class RocketController : MonoBehaviour
         t.localPosition += -t.forward * Time.deltaTime * speed;
 
         float xRot = t.rotation.x;
-        transform.Rotate(Vector3.up * kim.GetComponent<PlayerController>().sideways * rotationSpeed);
+        //transform.Rotate(Vector3.up * kim.GetComponent<PlayerController>().sideways * rotationSpeed);
 
         if (Time.time - _startTime > timestamp)
         {

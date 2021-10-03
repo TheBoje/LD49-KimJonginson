@@ -10,40 +10,16 @@ public class PlayerController : MonoBehaviour
     // Reference to stand
     public GameObject stand;
 
-    [SerializeField] private GameObject _rightShoulderPivot;
-    [SerializeField] private GameObject _rightArm;
-    [SerializeField] private GameObject _rightElbowPivot;
-    [SerializeField] private GameObject _rightForearm;
-    [SerializeField] private GameObject _rightHand;
-    [SerializeField] private GameObject _rightHandPivot;
-
-    [SerializeField] private GameObject _leftShoulderPivot;
-    [SerializeField] private GameObject _leftArm;
-    [SerializeField] private GameObject _leftHandPivot;
-
-    private GameObject _rightElbowTarget;
 
     private GameObject _controllerTopPivot;
 
-    private float _rightArmLength;
-    private float _rightForearmLength;
 
-    public GameObject debugPoint;
-
-    private void snapRightHand()
-    {
-        // _rightHandPivot.transform.position = _controllerTopPivot.transform.position;
-
-        Vector3 b_prime = (_rightShoulderPivot.transform.position + _controllerTopPivot.transform.position) / 2f;
-
-        Vector3 newElbowPosition = Vector3.MoveTowards(b_prime, _rightElbowTarget.transform.position, Vector3.Distance(b_prime, _rightElbowTarget.transform.position) / 2f);
-        
-        debugPoint.transform.position = newElbowPosition;
-        
-        SnapBetween(_rightArm, newElbowPosition, _rightShoulderPivot.transform.position);
-        
-        SnapBetween(_rightForearm, _controllerTopPivot.transform.position, newElbowPosition);
-    }
+    public GameObject rightArm;
+    public GameObject rightArmPivot;
+    public GameObject forarmPivot;
+    public GameObject forarm;
+    public GameObject controller;
+    
 
     private void SnapBetween(GameObject main, Vector3 from, Vector3 to)
     {
@@ -56,21 +32,6 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _rightShoulderPivot = transform.Find("RightShoulderPivot").gameObject;
-        _rightArm = transform.Find("RightArm").gameObject;
-        _rightElbowPivot = transform.Find("RightElbowPivot").gameObject;
-        _rightForearm = transform.Find("RightForearm").gameObject;
-        _rightHand = _rightForearm.transform.Find("RightHand").gameObject;
-        _rightHandPivot = _rightForearm.transform.Find("RightHandPivot").gameObject;
-
-        _rightElbowTarget = transform.Find("RightElbowTarget").gameObject;
-        
-        _leftShoulderPivot = transform.Find("LeftShoulderPivot").gameObject;
-        _leftArm = _leftShoulderPivot.transform.Find("LeftArm").gameObject;
-        _leftHandPivot = _leftArm.transform.Find("LeftHandPivot").gameObject;
-
-        _controllerTopPivot = stand.transform.Find("ControllerBottomPivot").Find("Controller").Find("ControllerTopPivot").gameObject;
-
 
     }
     
@@ -78,7 +39,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        snapRightHand();
+        forarm.transform.LookAt(controller.transform);
+        forarm.transform.position = controller.transform.position - Vector3.forward * 0.4f ;
+        
+        rightArm.transform.LookAt(forarmPivot.transform);
+        // rightArm.transform.LookAt(forarmPivot.transform);
         // SnapBetween(_leftHand, _leftShoulderPivot, _buttonPivot);
         // SnapBetween(_rightHand, _rightShoulderPivot, _controllerPivot);
     }

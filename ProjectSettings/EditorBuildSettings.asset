@@ -14,5 +14,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: ae9f56a6de1209141b3a3a0998ffc14c
+  - enabled: 1
+    path: Assets/Scenes/KoreaEndMenu.unity
+    guid: 4a955420eec42ad438ac3ee6fb2c327e
+  - enabled: 1
+    path: Assets/Scenes/LooseMenu.unity
+    guid: 8033d335fafc7104fa0113998bdf2f17
+  - enabled: 1
+    path: Assets/Scenes/WinMenu.unity
+    guid: 60a210a1bb9eac743bd4e9cbf23f9def
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 237e565c5730c0f40a9450a633503308, type: 2}

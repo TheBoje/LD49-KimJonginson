@@ -51,7 +51,7 @@ public class SettingsMenu : MonoBehaviour
         {
             tmp.Add(_resolutions[i].width + "x" + _resolutions[i].height + "@" + _resolutions[i].refreshRate + "hz");
 
-            if (_resolutions[i].ToString() == Screen.currentResolution.ToString())
+            if (_resolutions[i].height == Screen.currentResolution.height && _resolutions[i].width == Screen.currentResolution.width)
             {
                 actualIndex = i;
             }
@@ -60,8 +60,6 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.AddOptions(tmp);
         resolutionDropdown.value = actualIndex;
         resolutionDropdown.RefreshShownValue();
-
-
         toggle.isOn = Screen.fullScreen;
     }
 }

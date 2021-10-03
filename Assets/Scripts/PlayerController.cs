@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         forarm.transform.LookAt(controller.transform);
-        forarm.transform.position = controller.transform.position - Vector3.forward * 0.4f ;
+        forarm.transform.position = controller.transform.position - Vector3.right * 0.4f ;
         
         rightArm.transform.LookAt(forarmPivot.transform);
         // rightArm.transform.LookAt(forarmPivot.transform);

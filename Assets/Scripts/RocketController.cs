@@ -2,12 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Vector3 = UnityEngine.Vector3;
 
 public class RocketController : MonoBehaviour
 {
+    private const int NB_BARS_FUEL = 20;
+    
     public float maxSpeed = 1f;
     public Vector3 maxScale;
     
@@ -16,7 +20,7 @@ public class RocketController : MonoBehaviour
 
     private float _speed;
 
-    public GameObject kim;
+    public GameObject gm;
 
     private Vector3 _rotation;
 
@@ -25,22 +29,70 @@ public class RocketController : MonoBehaviour
 
     private float _startTime;
 
-    public float fuel = 50f;
+    public float maxFuel = 50f;
+    private float _fuel;
 
     public float scaleMultiplier = 0.1f;
     public float speedMultiplier = 0.1f;
+    public float consumerMultiplier = 0.1f;
 
     private bool _isGoingToExplode;
+    private bool _isExploded;
 
+    public float rotationSpeed = 0.1f;
+
+    public ParticleSystem particleSystem;
+
+    public TextMesh fuelLevel;
+
+    private AudioSource _audio;
+    
     private void Start()
     {
         _speed = minSpeed;
         transform.localScale = minScale;
         _trail = gameObject.GetComponentInChildren<TrailRenderer>();
-        _trail.time = fuel;
+        _trail.time = maxFuel;
         _startTime = Time.time;
         _isGoingToExplode = false;
+        _fuel = maxFuel;
+        _isExploded = false;
+        _audio = GetComponent<AudioSource>();
+        _audio.Play();
     }
+    
+    private int ComputeFuelLeft()
+    {
+        return (int) Mathf.Floor((_fuel * NB_BARS_FUEL) / maxFuel);
+    }
+
+    private void PrintFuel()
+    {
+        String str = "";
+        int nbBars = ComputeFuelLeft();
+
+        for (int i = 0; i < nbBars; i++)
+        {
+            str += '|';
+        }
+
+        for (int i = nbBars; i < NB_BARS_FUEL; i++)
+        {
+            str += '.';
+        }
+
+        fuelLevel.text = "Fuel " + str;
+    }
+
+    private void ConsumeFuel()
+    {
+        _fuel = Mathf.Lerp(_fuel, 0, Time.deltaTime * consumerMultiplier);
+
+        if (_fuel <= 2)
+            _isGoingToExplode = true;
+    }
+    
+
 
     // Update is called once per frame
     void FixedUpdate()
@@ -54,31 +106,45 @@ public class RocketController : MonoBehaviour
         if(transform.localScale.x > minScale.x && _isGoingToExplode)
             transform.localScale = Vector3.Lerp(transform.localScale, minScale, Time.deltaTime * scaleMultiplier);
 
-        if (_speed > maxSpeed && _isGoingToExplode)
+        if (_speed > minSpeed && _isGoingToExplode)
             _speed = Mathf.Lerp(_speed, minSpeed, Time.deltaTime * speedMultiplier);
+        
+        if(Math.Abs(_speed - minSpeed) < 0.1f && _isGoingToExplode && !_isExploded)
+        {
+            _speed = 0;
+            Explode();
+        }
 
         var t = transform;
         t.localPosition += -t.forward * Time.deltaTime * _speed;
 
         float xRot = t.rotation.x;
-        //transform.Rotate(Vector3.up * kim. * rotationSpeed);
+        transform.Rotate(Vector3.up * gm.GetComponent<InputController>().sideways * rotationSpeed);
+
+        if (gm.GetComponent<InputController>().explode && !_isGoingToExplode)
+            _isGoingToExplode = true;
 
         if (Time.time - _startTime > timestamp)
         {
             _startTime = Time.time;
             ToggleTrail();
         }
+        ConsumeFuel();
+        PrintFuel();
     }
-
+    
     void Explode()
     {
-        ParticleSystem exp = GetComponent<ParticleSystem>();
-        exp.Play();
-        Destroy(gameObject, exp.main.duration);
+        particleSystem.Play();
+        Destroy(particleSystem, particleSystem.main.duration);
+        _isExploded = true;
+        _audio.Stop();
     }
 
     void ToggleTrail()
     {
         _trail.emitting = !_trail.emitting;
     }
+
+    public bool IsExploded => _isExploded;
 }

@@ -44,6 +44,22 @@ public class RocketController : MonoBehaviour
     public ParticleSystem particleSystem;
 
     public TextMesh fuelLevel;
+
+    private AudioSource _audio;
+    
+    private void Start()
+    {
+        _speed = minSpeed;
+        transform.localScale = minScale;
+        _trail = gameObject.GetComponentInChildren<TrailRenderer>();
+        _trail.time = maxFuel;
+        _startTime = Time.time;
+        _isGoingToExplode = false;
+        _fuel = maxFuel;
+        _isExploded = false;
+        _audio = GetComponent<AudioSource>();
+        _audio.Play();
+    }
     
     private int ComputeFuelLeft()
     {
@@ -76,17 +92,7 @@ public class RocketController : MonoBehaviour
             _isGoingToExplode = true;
     }
     
-    private void Start()
-    {
-        _speed = minSpeed;
-        transform.localScale = minScale;
-        _trail = gameObject.GetComponentInChildren<TrailRenderer>();
-        _trail.time = maxFuel;
-        _startTime = Time.time;
-        _isGoingToExplode = false;
-        _fuel = maxFuel;
-        _isExploded = false;
-    }
+
 
     // Update is called once per frame
     void FixedUpdate()
@@ -132,6 +138,7 @@ public class RocketController : MonoBehaviour
         particleSystem.Play();
         Destroy(particleSystem, particleSystem.main.duration);
         _isExploded = true;
+        _audio.Stop();
     }
 
     void ToggleTrail()

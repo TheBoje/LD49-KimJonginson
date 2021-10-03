@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
@@ -11,6 +13,8 @@ public class GameManager : MonoBehaviour
     private InputController _inputController;
 
     [SerializeField] private float _targetDistance;
+
+    private PlayableDirector _timeline;
 
 
     float ComputeTargetDistance()
@@ -23,7 +27,7 @@ public class GameManager : MonoBehaviour
      */
     void ComputePerlinScale()
     {
-        _inputController.PerlinScale = 1 / _targetDistance;
+        _inputController.PerlinScale = 1 / _targetDistance * 2;
     }
 
     private void ComputeEndGame()
@@ -44,6 +48,8 @@ public class GameManager : MonoBehaviour
     {
         _inputController = GetComponent<InputController>();
         _targetDistance = ComputeTargetDistance();
+        rocket.GetComponent<RocketController>().enabled = false;
+        _timeline = GetComponent<PlayableDirector>();
     }
 
     // Update is called once per frame
@@ -52,5 +58,8 @@ public class GameManager : MonoBehaviour
         _targetDistance = ComputeTargetDistance();
         ComputePerlinScale();
         ComputeEndGame();
+
+        if (_timeline.state != PlayState.Playing && !rocket.GetComponent<RocketController>().enabled)
+            rocket.GetComponent<RocketController>().enabled = true;
     }
 }

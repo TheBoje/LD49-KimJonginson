@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestScene/Altimors.unity
     guid: 9c408cbc42e0cd141b9198bb3b56840f
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: ae9f56a6de1209141b3a3a0998ffc14c
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 237e565c5730c0f40a9450a633503308, type: 2}

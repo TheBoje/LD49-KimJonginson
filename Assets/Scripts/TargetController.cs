@@ -4,21 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public class USAController : MonoBehaviour
+public class TargetController : MonoBehaviour
 {
-    private bool _isInUSA;
+    private bool _isInTarget;
 
     private void Start()
     {
-        _isInUSA = false;
+        _isInTarget = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Rocket"))
         {
-            Debug.Log("ENTER USA");
-            _isInUSA = true;
+            _isInTarget = true;
         }
     }
 
@@ -26,10 +25,9 @@ public class USAController : MonoBehaviour
     {
         if (other.CompareTag("Rocket"))
         {
-            Debug.Log("EXIT USA");
-            _isInUSA = false;
+            _isInTarget = false;
         }
     }
 
-    public bool IsInUsa => _isInUSA;
+    public bool IsInTarget => _isInTarget;
 }

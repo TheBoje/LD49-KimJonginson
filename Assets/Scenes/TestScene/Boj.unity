@@ -405,6 +405,63 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5000800890021217966, guid: 955861b21f67419459fc4507827c7a09, type: 3}
   m_PrefabInstance: {fileID: 7936403752857501203}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6779630713872695111
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3942716167308311875, guid: 69f4ec9eebfc65b4687f5c336a2b8cf4, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942716167308311875, guid: 69f4ec9eebfc65b4687f5c336a2b8cf4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942716167308311875, guid: 69f4ec9eebfc65b4687f5c336a2b8cf4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.424
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942716167308311875, guid: 69f4ec9eebfc65b4687f5c336a2b8cf4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.005167025
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942716167308311875, guid: 69f4ec9eebfc65b4687f5c336a2b8cf4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942716167308311875, guid: 69f4ec9eebfc65b4687f5c336a2b8cf4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942716167308311875, guid: 69f4ec9eebfc65b4687f5c336a2b8cf4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942716167308311875, guid: 69f4ec9eebfc65b4687f5c336a2b8cf4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942716167308311875, guid: 69f4ec9eebfc65b4687f5c336a2b8cf4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942716167308311875, guid: 69f4ec9eebfc65b4687f5c336a2b8cf4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942716167308311875, guid: 69f4ec9eebfc65b4687f5c336a2b8cf4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466594302430652409, guid: 69f4ec9eebfc65b4687f5c336a2b8cf4, type: 3}
+      propertyPath: m_Name
+      value: BeautifulKim
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69f4ec9eebfc65b4687f5c336a2b8cf4, type: 3}
 --- !u!1001 &7585508873247604896
 PrefabInstance:
   m_ObjectHideFlags: 0

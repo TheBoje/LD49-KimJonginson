@@ -9,12 +9,11 @@ public class PlayerController : MonoBehaviour
     // Reference to stand
     public GameObject stand;
 
-    private GameObject _leftShoulderPivot;
-    private GameObject _rightShoulderPivot;
     private GameObject _leftHand;
-    private GameObject _leftHandPivot;
+    private GameObject _leftShoulderPivot;
+    
     private GameObject _rightHand;
-    private GameObject _rightHandPivot;
+    private GameObject _rightShoulderPivot;
     
     private GameObject _button;
     private GameObject _buttonPivot;
@@ -43,8 +42,6 @@ public class PlayerController : MonoBehaviour
         // Find hands and hands` pivots in scene
         _leftHand = _leftShoulderPivot.transform.Find("LeftHand").gameObject;
         _rightHand = _rightShoulderPivot.transform.Find("RightHand").gameObject;
-        _leftHandPivot = _leftHand.transform.Find("LeftHandPivot").gameObject;
-        _rightHandPivot = _rightHand.transform.Find("RightHandPivot").gameObject;
     }
 
     // Update is called once per frame

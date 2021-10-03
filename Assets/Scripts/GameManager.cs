@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
@@ -31,6 +33,13 @@ public class GameManager : MonoBehaviour
     {
         _inputController.PerlinScale = 1 / _targetDistance * 2;
     }
+    
+    IEnumerator LoadNextScene(String sceneName)
+    {
+        yield return new WaitForSeconds(2);
+
+        SceneManager.LoadScene(sceneName);
+    }
 
     private void ComputeEndGame()
     {
@@ -40,15 +49,18 @@ public class GameManager : MonoBehaviour
             if (usa.GetComponent<TargetController>().IsInTarget)
             {
                 Debug.Log("WIN !!!");
+                StartCoroutine(LoadNextScene("WinMenu"));
             }
             else if(korea.GetComponent<TargetController>().IsInTarget)
             {
                 koreaExplosion.Play();
                 Debug.Log("Boom boom dans la Corée");
+                StartCoroutine(LoadNextScene("KoreaEndMenu"));
             }
             else
             {
                 Debug.Log("LOSE !!!");
+                StartCoroutine(LoadNextScene("LooseMenu"));
             }
         }
     }

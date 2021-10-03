@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
             {
                 koreaExplosion.Play();
                 Debug.Log("Boom boom dans la Corée");
-                StartCoroutine(LoadNextScene("LooseMenu"));
+                StartCoroutine(LoadNextScene("KoreaEndMenu"));
             }
             else
             {

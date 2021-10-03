@@ -12,10 +12,12 @@ public class GameManager : MonoBehaviour
     public GameObject korea;
     private InputController _inputController;
 
+    public ParticleSystem koreaExplosion;
+
     [SerializeField] private float _targetDistance;
 
     private PlayableDirector _timeline;
-
+    private bool _isGameEnded;
 
     float ComputeTargetDistance()
     {
@@ -34,12 +36,20 @@ public class GameManager : MonoBehaviour
     {
         if (rocket.GetComponent<RocketController>().IsExploded)
         {
+            _isGameEnded = true;
             if (usa.GetComponent<TargetController>().IsInTarget)
+            {
                 Debug.Log("WIN !!!");
+            }
             else if(korea.GetComponent<TargetController>().IsInTarget)
+            {
+                koreaExplosion.Play();
                 Debug.Log("Boom boom dans la Corée");
+            }
             else
+            {
                 Debug.Log("LOSE !!!");
+            }
         }
     }
 
@@ -50,6 +60,7 @@ public class GameManager : MonoBehaviour
         _targetDistance = ComputeTargetDistance();
         rocket.GetComponent<RocketController>().enabled = false;
         _timeline = GetComponent<PlayableDirector>();
+        _isGameEnded = false;
     }
 
     // Update is called once per frame
@@ -57,7 +68,8 @@ public class GameManager : MonoBehaviour
     {
         _targetDistance = ComputeTargetDistance();
         ComputePerlinScale();
-        ComputeEndGame();
+        if(!_isGameEnded)
+            ComputeEndGame();
 
         if (_timeline.state != PlayState.Playing && !rocket.GetComponent<RocketController>().enabled)
             rocket.GetComponent<RocketController>().enabled = true;

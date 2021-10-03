@@ -42,6 +42,7 @@ public class RocketController : MonoBehaviour
     public float rotationSpeed = 0.1f;
 
     public ParticleSystem particleSystem;
+    public AudioSource explosionSound;
 
     public TextMesh fuelLevel;
 
@@ -139,6 +140,8 @@ public class RocketController : MonoBehaviour
         Destroy(particleSystem, particleSystem.main.duration);
         _isExploded = true;
         _audio.Stop();
+        explosionSound.Play();
+        _fuel = 0;
     }
 
     void ToggleTrail()

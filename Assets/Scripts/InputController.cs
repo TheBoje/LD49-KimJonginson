@@ -22,10 +22,16 @@ public class InputController : MonoBehaviour
     [SerializeField] private float lerpCoef = 0.4f;
 
     public float sideways;
+    public bool explode = false;
     
     public void handleSidewaysInput(InputAction.CallbackContext context)
     {
         _inputSideways = _playerActionControls.Player.Controls.ReadValue<float>();
+    }
+
+    public void handleExplodeInput(InputAction.CallbackContext context)
+    {
+        explode = true;
     }
 
     private float getPerlinVariation()
@@ -88,5 +94,11 @@ public class InputController : MonoBehaviour
     private void OnDisable()
     {
         _playerActionControls.Disable();
+    }
+
+    public float PerlinScale
+    {
+        get => _perlinScale;
+        set => _perlinScale = value;
     }
 }

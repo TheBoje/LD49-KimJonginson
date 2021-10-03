@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
@@ -11,7 +13,9 @@ public class SettingsMenu : MonoBehaviour
 
     private Resolution[] _resolutions;
 
-    public Dropdown resolutionDropdown;
+    public TMP_Dropdown resolutionDropdown;
+
+    public Toggle toggle;
     
     
     public void setVolume(float val)
@@ -31,7 +35,8 @@ public class SettingsMenu : MonoBehaviour
 
     public void setResolution(int val)
     {
-        
+        Resolution res = _resolutions[val];
+        Screen.SetResolution(res.width, res.height, Screen.fullScreen, res.refreshRate);
     }
 
     public void Start()
@@ -39,10 +44,24 @@ public class SettingsMenu : MonoBehaviour
         _resolutions = Screen.resolutions;
         
         resolutionDropdown.ClearOptions();
-        
-        foreach (Resolution res in _resolutions)
+
+        List<String> tmp = new List<string>();
+        int actualIndex = 0;
+        for (int i = 0; i < _resolutions.Length; i++)
         {
-            // resolutionDropdown.AddOptions(res.ToString());
+            tmp.Add(_resolutions[i].width + "x" + _resolutions[i].height + "@" + _resolutions[i].refreshRate + "hz");
+
+            if (_resolutions[i].ToString() == Screen.currentResolution.ToString())
+            {
+                actualIndex = i;
+            }
         }
+        
+        resolutionDropdown.AddOptions(tmp);
+        resolutionDropdown.value = actualIndex;
+        resolutionDropdown.RefreshShownValue();
+
+
+        toggle.isOn = Screen.fullScreen;
     }
 }
